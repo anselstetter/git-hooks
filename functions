@@ -1,0 +1,14 @@
+FILENAME=$(basename $0)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+EXCEPTION_FILE="godmode"
+
+function prevent() {
+	if [ -f $EXCEPTION_FILE ]; then
+		rm $EXCEPTION_FILE
+		exit 0
+	else
+		echo "Prevented $1 to protected branch \"$BRANCH\" by $FILENAME hook"
+		echo "Remember to create file 'touch $EXCEPTION_FILE' to $1 to \"$BRANCH\""
+	fi
+	exit 1
+}

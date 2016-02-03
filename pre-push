@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# No force-pushing to protected branches
+
+source $(git rev-parse --git-dir)/hooks/functions
+
+PROTECTED_BRANCHES="^(master)"
+PUSH_COMMAND=$(ps -ocommand= -p $PPID)
+FORCE_PUSH="force|delete|-f"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES && "$PUSH_COMMAND" =~ $FORCE_PUSH ]]; then
+	prevent "force-push"
+fi
+exit 0

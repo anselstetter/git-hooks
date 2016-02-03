@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# No commit to protected branches
+
+source $(git rev-parse --git-dir)/hooks/functions
+
+PROTECTED_BRANCHES="^(master)"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+	prevent "commit"
+fi
+exit 0
